@@ -1,13 +1,20 @@
 {
-  "name": "menu",
-  "version": "1.0.0",
-  "description": "",
+  "name": "menu-args",
+  "version": "0.0.0",
+  "description": "Toolkit for creating command line interfaces without writing so much code",
   "main": "index.js",
   "scripts": {
     "build": "jison grammar.jison"
   },
-  "keywords": [],
-  "author": "",
+  "files": [
+    "index.js",
+    "grammar.js",
+    "LICENSE",
+    "package.json",
+    "README.md"
+  ],
+  "keywords": ["cli", "args", "terminal", "menu"],
+  "author": "juliandavidmr <juliandavidmr@github.io>",
   "license": "ISC",
   "devDependencies": {},
   "dependencies": {

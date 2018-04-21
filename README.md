@@ -1,9 +1,11 @@
-# xargs
+# menu-args
 
-A simple creator of super-fast menus using the [args](https://github.com/leo/args) package.
+Toolkit for creating command line interfaces without writing so much code.
+
+> `menu-args` uses the [args](https://github.com/leo/args) package.
 
 ```js
-const menu = require('xargs')
+const menu = require('menu-args')
 
 var args = menu(`
 Commands
@@ -45,7 +47,32 @@ it is obtained:
 > **Not yet published**
 
 ```bash
-npm install xargs --save
+npm install menu-args --save
+```
+
+### Example
+
+If you run function `args.showHelp()`, we'll see:
+
+```txt
+Usage: test.js [options] [command]
+
+  Commands:
+
+    build, b
+    help      Display help
+    reload    undefined
+    serve     "Run server"
+    version   Display version
+
+  Options:
+
+    -h, --help          Output usage information
+    -p, --pass          Password system
+    -P, --port [value]  Port, default value (defaults to "8080")
+    -s, --state
+    -u, --user          "Username"
+    -v, --version       Output the version number
 ```
 
 License MIT
