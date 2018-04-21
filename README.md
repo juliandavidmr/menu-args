@@ -44,8 +44,6 @@ it is obtained:
 
 ## Install
 
-> **Not yet published**
-
 ```bash
 npm install menu-args --save
 ```
