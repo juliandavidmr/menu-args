@@ -6,8 +6,6 @@ A simple creator of super-fast menus using the [args](https://github.com/leo/arg
 const menu = require('xargs')
 
 var args = menu(`
-Usage "Hola soy un mensaje"
-
 Commands
     serve "Run server"
     build, b
@@ -26,7 +24,7 @@ console.log(args.parse(process.argv))
 If the command is executed:
 
 ```bash
-node test.js -u the.user
+node test.js -u the.user -p 1a2b3c
 ```
 
 it is obtained:

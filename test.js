@@ -1,8 +1,6 @@
 const menu = require('./')
 
 var args = menu(`
-Usage "Hola soy un mensaje"
-
 Commands
     serve "Run server"
     build, b
