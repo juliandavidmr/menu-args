@@ -13,7 +13,12 @@
     "package.json",
     "README.md"
   ],
-  "keywords": ["cli", "args", "terminal", "menu"],
+  "keywords": [
+    "cli",
+    "args",
+    "terminal",
+    "menu"
+  ],
   "author": "juliandavidmr <juliandavidmr@github.io>",
   "license": "ISC",
   "devDependencies": {},
