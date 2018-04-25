@@ -20,8 +20,14 @@
     "menu"
   ],
   "author": "juliandavidmr <juliandavidmr@github.io>",
-  "license": "ISC",
-  "devDependencies": {},
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliandavidmr/menu-args.git"
+  },
+  "devDependencies": {
+    "jison-gho": "^0.6.1-215"
+  },
   "dependencies": {
     "args": "^4.0.0"
   }

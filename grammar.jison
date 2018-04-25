@@ -3,6 +3,12 @@
 %{
 	const args = require('args')
 	parser.args = args
+
+	function remove_colons(val) {
+		if (val && val.length > 2) {
+			return val.slice(1, val.length - 1)
+		}
+	}
 %}
 
 /* lexical grammar */
@@ -18,16 +24,6 @@ id [a-zA-Z_][a-zA-Z0-9_]*
 "true"					return 'TRUE'
 "false"					return 'FALSE'
 
-/* reserved words */
-":"						return 'COLON'
-"#"						return 'HASH'
-"?"						return 'QUESTION'
-"~"						return 'TILDE'
-"_"						return 'UNDERSCORE'
-"def"					return 'DEF'
-"end"					return 'END'
-"not"					return 'NOT'
-
 /* types */
 "string"				return 'TYPE_STRING'
 "integer"				return 'TYPE_NUMBER'
@@ -37,28 +33,13 @@ id [a-zA-Z_][a-zA-Z0-9_]*
 "float"					return 'TYPE_FLOAT'
 [Uu]sage				return 'USAGE_WORD'
 [Cc]ommands				return 'COMMAND_WORD'
-[O]ptions				return 'OPTIONS_WORD'
-
-/* Logic operators */
-"and"					return 'AND'
-"&&"					return 'AND'
-"or"					return 'OR'
-"||"					return 'OR'
+[Oo]ptions				return 'OPTIONS_WORD'
 
 /* any */
-"%"						return '%'
 "="						return 'ASSIGN'
 "=="					return 'EQUAL'
-"==="					return 'IDENTICAL'
 "->"					return '->'
 "*"						return '*'
-"/"						return '/'
-"-"						return '-'
-"+"						return '+'
-">"						return '>'
-"<"						return '<'
-"!="					return '!='
-"^"						return '^'
 "("						return 'PAR_OPEN'
 ")"						return 'PAR_CLOSE'
 "["						return '['
@@ -66,16 +47,14 @@ id [a-zA-Z_][a-zA-Z0-9_]*
 "PI"					return 'PI'
 "E"						return 'E'
 ";"						return 'SEMICOL'
-'..'					return 'DOT2'
 '.'						return 'DOT'
 ','						return 'COMMA'
 {id}					return 'ID'
-@{id}					return 'ATTR'
 \"(?:\"\"|[^"])*\"		return 'STRING'
 \n						return 'BREAKLINE'
 
 <<EOF>>					return 'EOF'
-.						return 'INVALID'
+.							return 'INVALID'
 
 /lex
 
@@ -84,21 +63,10 @@ id [a-zA-Z_][a-zA-Z0-9_]*
 
 /* operator associations and precedence */
 
-%left '%'
-%left '+' '-'
-%left '*' '/'
 %left '^'
-%left NOT
-%left '>' '<' '>=' '<=' '<>' EQUAL '!='
-%left 'NOT'
-%left 'AND' 'OR'
-%left '=' IDENTICAL
 %left UMINUS
-%left IF
 %left DOT
 %left DOT2
-%left AND
-%left COMMA
 
 %start syntax
 
@@ -106,7 +74,6 @@ id [a-zA-Z_][a-zA-Z0-9_]*
 
 syntax
 	: MENU* EOF
-		{ return $1; }
 ;
 
 MENU
@@ -117,21 +84,18 @@ MENU
 
 USAGE
 	: USAGE_WORD STRING
-		{ $$ = 'Usage: ' + $2 }
 ;
 
 COMMANDS
 	: COMMAND_WORD COMMAND*
-		{ $$ = $2 }
 ;
 
 COMMAND
 	: ID COMMA ID STRING?
-		{ parser.args.command(`${$1}`, $4 ? $4 : '', [`${$3}`]); }
+		{ parser.args.command(`${$1}`, $4 ? remove_colons($4) : '', [`${$3}`]); }
 	| ID STRING?
-		{ parser.args.command(`${$1}`, `${$2}`); }
+		{ parser.args.command(`${$1}`, `${$2 ? remove_colons($2) : ''}`); }
 ;
-
 
 OPTIONS
 	: OPTIONS_WORD OPTION*
@@ -139,9 +103,9 @@ OPTIONS
 
 OPTION
 	: ID STRING?
-		{ parser.args.option(`${$1}`, `${$2 ? $2 : ''}`) }
+		{ parser.args.option(`${$1}`, `${$2 ? remove_colons($2) : ''}`) }
 	| ID PAR_OPEN VALUE PAR_CLOSE STRING?
-		{ parser.args.option(`${$1}`, `${$5 ? $5 : ''}`, $VALUE) }
+		{ parser.args.option(`${$1}`, `${$5 ? remove_colons($5) : ''}`, $VALUE) }
 ;
 
 VALUE

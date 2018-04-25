@@ -3,7 +3,7 @@ const menu = require('./')
 var args = menu(`
 Commands
     serve "Run server"
-    build, b
+    build
     reload
 
 Options
